@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Reto9</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="distance">4</string>
+</resources>
