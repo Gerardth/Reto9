@@ -169,7 +169,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.addMarker(new MarkerOptions().position(centro).title("Marker in Los Andes"));
+        //mMap.addMarker(new MarkerOptions().position(centro).title("Marker in Los Andes"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(centro));
     }
 
