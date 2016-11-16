@@ -51,9 +51,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public String distance;
     private SharedPreferences mPrefs;
 
+    private static final String GOOGLE_API_KEY = "AIzaSyDiA5x7lhvvvUuwYV5JINKu25llV76wg0s";
     private static final int PETICION_PERMISO_LOCALIZACION = 101;
     private static final int PETICION_CONFIG_UBICACION = 201;
     private static final int PLACE_PICKER_REQUEST = 1;
+    private int PROXIMITY_RADIUS = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mPrefs = getSharedPreferences("ttt_prefs", MODE_PRIVATE);
         distance = mPrefs.getString("distance_places", getResources().getString(R.string.distance));
+        PROXIMITY_RADIUS = Integer.parseInt(distance);
 
         apiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
@@ -84,10 +87,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }
-
-        builder.setLatLngBounds(new LatLngBounds(
-                new LatLng(centro.latitude - Integer.parseInt(distance), centro.longitude - Integer.parseInt(distance)),
-                new LatLng(centro.latitude + Integer.parseInt(distance), centro.longitude + Integer.parseInt(distance))));
     }
 
     private void enableLocationUpdates(){
@@ -170,9 +169,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        centro = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(centro).title("Marker in Sydney"));
+        mMap.addMarker(new MarkerOptions().position(centro).title("Marker in Los Andes"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(centro));
     }
 
@@ -228,11 +225,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
 
             case PLACE_PICKER_REQUEST:
-                if (resultCode == RESULT_OK) {
+                /*if (resultCode == RESULT_OK) {
                     Place place = PlacePicker.getPlace(data, this);
                     String toastMsg = String.format("Place: %s", place.getName());
                     Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-                }
+                }*/
+                //String type = placeText.getText().toString();
+                StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+                googlePlacesUrl.append("location=" + centro.latitude + "," + centro.longitude);
+                googlePlacesUrl.append("&radius=" + PROXIMITY_RADIUS);
+                //googlePlacesUrl.append("&types=" + type);
+                googlePlacesUrl.append("&sensor=true");
+                googlePlacesUrl.append("&key=" + GOOGLE_API_KEY);
+
+                GooglePlacesReadTask googlePlacesReadTask = new GooglePlacesReadTask();
+                Object[] toPass = new Object[2];
+                toPass[0] = mMap;
+                toPass[1] = googlePlacesUrl.toString();
+                googlePlacesReadTask.execute(toPass);
                 break;
         }
     }
