@@ -74,7 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .addApi(Places.PLACE_DETECTION_API)
                 .build();
 
-        /*PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
 
         try {
             startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
@@ -82,7 +82,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.printStackTrace();
         } catch (GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     private void enableLocationUpdates(){
@@ -189,7 +189,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centro, 17));
-
+        System.out.println();
         setPlaces();
     }
 
