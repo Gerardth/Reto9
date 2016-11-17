@@ -189,7 +189,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centro, 17));
-        System.out.println();
         setPlaces();
     }
 
