@@ -36,7 +36,7 @@ public class PlacesDisplayTask extends AsyncTask<Object, Integer, List<HashMap<S
     @Override
     protected void onPostExecute(List<HashMap<String, String>> list) {
         googleMap.clear();
-        //System.out.println("TAMAÑO " + list.size() );
+        System.out.println("TAMAÑO " + list.size() );
         for (int i = 0; i < list.size(); i++) {
             MarkerOptions markerOptions = new MarkerOptions();
             HashMap<String, String> googlePlace = list.get(i);
@@ -48,7 +48,7 @@ public class PlacesDisplayTask extends AsyncTask<Object, Integer, List<HashMap<S
             markerOptions.position(latLng);
             markerOptions.title(placeName);
             googleMap.addMarker(markerOptions);
-            System.out.println("LATITUD " + lat + " LONGITUD " + lng);
+            //System.out.println("LATITUD " + lat + " LONGITUD " + lng);
         }
     }
 }

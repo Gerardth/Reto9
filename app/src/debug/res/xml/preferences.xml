@@ -5,6 +5,7 @@
         android:key="distance_places"
         android:summary=""
         android:defaultValue="@string/distance"
-        android:title="Radius (km)"/>
+        android:title="Radius (km)"
+        android:numeric="integer" />
 
 </PreferenceScreen>

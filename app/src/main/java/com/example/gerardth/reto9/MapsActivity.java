@@ -68,7 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         apiClient = new GoogleApiClient.Builder(this)
-                //.enableAutoManage(this, this)
+                .enableAutoManage(this, this)
                 .addConnectionCallbacks(this)
                 .addApi(LocationServices.API)
                 .addApi(Places.GEO_DATA_API)
@@ -84,16 +84,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }*/
-    }
-
-    protected void onStart() {
-        apiClient.connect();
-        super.onStart();
-    }
-
-    protected void onStop() {
-        apiClient.disconnect();
-        super.onStop();
     }
 
     private void enableLocationUpdates(){
@@ -151,7 +141,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(getApplicationContext(), "Inicio de recepción de ubicaciones", Toast.LENGTH_SHORT).show();
 
             LocationServices.FusedLocationApi.requestLocationUpdates( apiClient, locRequest, MapsActivity.this);
+            /*try {
+                LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, locRequest, MapsActivity.this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }*/
         }
+
     }
 
     private void disableLocationUpdates() {
@@ -198,7 +194,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             mMap.setMyLocationEnabled(true);
         }
-        startLocationUpdates();
+        //startLocationUpdates();
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centro, 17));
         setPlaces();
         mMap.addMarker(new MarkerOptions()
